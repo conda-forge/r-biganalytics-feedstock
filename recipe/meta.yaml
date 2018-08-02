@@ -15,7 +15,8 @@ source:
   sha256: 463184c23b68d469db2f780c97b9d4f37e28002e05d8cd6ffa46c309cb6b58c3
 
 build:
-  number: 0
+  merge_build_host: True  # [win]
+  number: 1
   skip: true  # [win32]
 
   rpaths:
@@ -23,15 +24,18 @@ build:
     - lib/
 requirements:
   build:
+    - posix                # [win]
+    - {{ compiler('c') }}        # [unix]
+    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ compiler('cxx') }}        # [unix]
+    - {{ compiler('m2w64_cxx') }}  # [win]
+  host:
     - r-base
     - r-bh
     - r-rcpp
     - r-biglm
     - r-bigmemory >=4.0.0
     - r-foreach
-    - posix                # [win]
-    - {{native}}toolchain  # [win]
-    - gcc                  # [not win]
 
   run:
     - r-base
@@ -40,7 +44,6 @@ requirements:
     - r-biglm
     - r-bigmemory >=4.0.0
     - r-foreach
-    - libgcc  # [not win]
 
 test:
   commands:
