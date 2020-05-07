@@ -1,4 +1,4 @@
-{% set version = '1.1.14' %}
+{% set version = "1.1.14" %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -15,8 +15,8 @@ source:
   sha256: 463184c23b68d469db2f780c97b9d4f37e28002e05d8cd6ffa46c309cb6b58c3
 
 build:
-  merge_build_host: True  # [win]
-  number: 1003
+  merge_build_host: true  # [win]
+  number: 1004
   skip: true  # [win32]
 
   rpaths:
@@ -52,13 +52,13 @@ test:
 
 about:
   home: http://www.bigmemory.org
-  license: LGPL-3 | Apache 2.0
-  summary: Extend the 'bigmemory' package with various analytics. Functions 'bigkmeans' and 'binit'
-    may also be used with native R objects. For 'tapply'-like functions, the bigtabulate
-    package may also be helpful. For linear algebra support, see 'bigalgebra'.  For
-    mutex (locking) support for advanced shared-memory usage, see 'synchronicity'.
+  license: LGPL-3.0-only OR Apache-2.0
+  summary: Extend the 'bigmemory' package with various analytics. Functions 'bigkmeans' and 'binit' may also be used with native R objects. For 'tapply'-like functions, the bigtabulate package may also be helpful. For linear algebra support, see 'bigalgebra'.  For mutex (locking) support for advanced shared-memory usage,
+    see 'synchronicity'.
   license_family: LGPL
 
+  license_file:
+    - {{ environ["PREFIX"] }}/lib/R/share/licenses/LGPL-3
 extra:
   recipe-maintainers:
     - conda-forge/r
