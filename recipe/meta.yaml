@@ -1,4 +1,4 @@
-{% set version = "1.1.21" %}
+{% set version = "1.1.22" %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,11 +12,11 @@ source:
   url:
     - https://cran.r-project.org/src/contrib/biganalytics_{{ version }}.tar.gz
     - https://cran.r-project.org/src/contrib/Archive/biganalytics/biganalytics_{{ version }}.tar.gz
-  sha256: debd18d8ed2e1a49fe25c69f8a636b955b1cabedd36ec69c0bff53b64d8eb9a5
+  sha256: d0bf73547cca64479d7e704ad48b3b4d3fba35811e5b74a4c08486911fc93f79
 
 build:
   merge_build_host: true  # [win]
-  number: 2
+  number: 0
   skip: true  # [win32]
 
   rpaths:
