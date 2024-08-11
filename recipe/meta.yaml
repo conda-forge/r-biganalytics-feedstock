@@ -1,34 +1,40 @@
 {% set version = "1.1.22" %}
-
 {% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-biganalytics
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: biganalytics_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/biganalytics_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/biganalytics/biganalytics_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/biganalytics_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/biganalytics/biganalytics_{{ version }}.tar.gz
   sha256: d0bf73547cca64479d7e704ad48b3b4d3fba35811e5b74a4c08486911fc93f79
 
 build:
-  merge_build_host: true  # [win]
-  number: 0
-  skip: true  # [win32]
-
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+
 requirements:
   build:
-    - posix                # [win]
     - {{ compiler('c') }}        # [unix]
+    - {{ stdlib("c") }}          # [unix]
     - {{ compiler('m2w64_c') }}  # [win]
+    - {{ stdlib("m2w64_c") }}    # [win]
     - {{ compiler('cxx') }}        # [unix]
     - {{ compiler('m2w64_cxx') }}  # [win]
+    - {{ posix }}filesystem        # [win]
+    - {{ posix }}sed               # [win]
+    - {{ posix }}grep              # [win]
+    - {{ posix }}autoconf
+    - {{ posix }}automake          # [not win]
+    - {{ posix }}automake-wrapper  # [win]
+    - {{ posix }}pkg-config
+    - {{ posix }}make
+    - {{ posix }}coreutils         # [win]
+    - {{ posix }}zip               # [win]
   host:
     - r-base
     - r-bh
@@ -36,10 +42,9 @@ requirements:
     - r-biglm
     - r-bigmemory >=4.0.0
     - r-foreach
-
   run:
     - r-base
-    - r-bh
+    #- r-bh
     - r-rcpp
     - r-biglm
     - r-bigmemory >=4.0.0
@@ -47,7 +52,7 @@ requirements:
 
 test:
   commands:
-    - $R -e "library('biganalytics')"  # [not win]
+    - $R -e "library('biganalytics')"           # [not win]
     - "\"%R%\" -e \"library('biganalytics')\""  # [win]
 
 about:
@@ -56,13 +61,9 @@ about:
   summary: Extend the 'bigmemory' package with various analytics. Functions 'bigkmeans' and 'binit' may also be used with native R objects. For 'tapply'-like functions, the bigtabulate package may also be helpful. For linear algebra support, see 'bigalgebra'.  For mutex (locking) support for advanced shared-memory usage,
     see 'synchronicity'.
   license_family: LGPL
-
   license_file:
     - {{ environ["PREFIX"] }}/lib/R/share/licenses/LGPL-3
+
 extra:
   recipe-maintainers:
     - conda-forge/r
-    - dpryan79
-    - johanneskoester
-    - bgruening
-    - daler
