@@ -12,7 +12,7 @@ source:
   sha256: d0bf73547cca64479d7e704ad48b3b4d3fba35811e5b74a4c08486911fc93f79
 
 build:
-  number: 1
+  number: 2
   rpaths:
     - lib/R/lib/
     - lib/
@@ -35,6 +35,12 @@ requirements:
     - {{ posix }}make
     - {{ posix }}coreutils         # [win]
     - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+    - r-bh                         # [build_platform != target_platform]
+    - r-rcpp                       # [build_platform != target_platform]
+    - r-biglm                      # [build_platform != target_platform]
+    - r-bigmemory >=4.0.0          # [build_platform != target_platform]
+    - r-foreach                    # [build_platform != target_platform]
   host:
     - r-base
     - r-bh
@@ -60,7 +66,6 @@ about:
   license: LGPL-3.0-only OR Apache-2.0
   summary: Extend the 'bigmemory' package with various analytics. Functions 'bigkmeans' and 'binit' may also be used with native R objects. For 'tapply'-like functions, the bigtabulate package may also be helpful. For linear algebra support, see 'bigalgebra'.  For mutex (locking) support for advanced shared-memory usage,
     see 'synchronicity'.
-  license_family: LGPL
   license_file:
     - {{ environ["PREFIX"] }}/lib/R/share/licenses/LGPL-3
 
